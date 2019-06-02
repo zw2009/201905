@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" type="text/css" href="favicon.ico" />
+		<link rel="icon" type="text/css" href="favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+		<title>登陆</title>
+	</head>
+	<body>
+		<div class="container mt-sm-5">
+			<div class="d-none d-sm-block" style="margin-top: 200px;">
+			</div>
+			<div class="mt-5">
+				<div class="row">
+					<div class="col-sm-8 m-auto col-12">
+						<div class="card shadow-lg bg-light">
+							<div class="card-header bg-info text-light">
+								<h5 class="m-0"><span class="glyphicon glyphicon-user"></span>用户登录</h5>
+							</div>
+							<div class="card-body">
+								<form  onclick="return false">
+									<input type="hidden" name="_token" value="">
+									<div class="form-group">
+										<label>帐号</label>
+										<input id="sname" type="phone" name="phone" class="form-control" required="phone" placeholder="请输入手机号码">
+									</div>
+									<div class="form-group">
+										<label>密码</label>
+										<input id="spwd" type="password" name="password" class="form-control" required="" placeholder="请输入您的登录密码">
+									</div>
+									<button class="btn btn-success btn-sm" id="login">登录帐号</button>
+								</form>
+							</div>
+							<div class="card-footer text-muted">
+								<a href="health.html" class="mr-2"><span class="glyphicon glyphicon-home"></span> 网站首页 </a>
+								<a href="register.html" class="mr-2"><span class="glyphicon glyphicon-plus"></span> 注册帐号</a>
+								<a href="findpwd.html" class="mr-2"><span class="glyphicon glyphicon-search"></span> 找回密码</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/md5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

@@ -1,0 +1,31 @@
+.qq_conent{
+	padding-bottom: 50px;
+	width: 900px;
+}
+.qq_conent h1 {
+    font-size: 30px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: #333;
+    margin-top: 8px;
+}
+.content-article p {
+	text-indent: 2em;
+    line-height: 2.2;
+    margin-bottom: 2em;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    font-size: 18px;
+}
+.content-article p img{
+	max-width: 600px;
+    margin: 20px auto;
+    display: block;
+    vertical-align: middle;
+}
+/*广告位*/
+.banner3{
+	width: 1200px;
+	height: 130px;
+	margin:55px auto ;
+}

@@ -1,0 +1,29 @@
+#fullTime {
+	width: 1200px;
+	margin: 0 auto;
+	background: #e1e1e1;
+	padding-bottom: 50px;
+}
+
+form.layui-form {
+	margin-top: 50px !important;
+	width: 800px;
+	margin: 0 auto;
+}
+
+.layui-form input {
+	border-radius: 5px;
+}
+
+.layui-form textarea {
+	border-radius: 5px;
+}
+
+button.layui-inline.layui-btn {
+	height: 30px;
+	line-height: 30px;
+}
+.layui-form-item .layui-form-checkbox {
+    margin-top: 4px;
+    border-radius: 5px;
+}

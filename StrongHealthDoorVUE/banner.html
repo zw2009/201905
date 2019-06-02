@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="icon" type="text/css" href="favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+	</head>
+
+	<body>
+		<div id="myCarousel" class="carousel slide">
+			<!-- Carousel items -->
+			<div class="carousel-inner">
+				<div class="active item"><img src="img/banner.jpg"/></div>
+				<div class="item"><img src="img/banner1.jpg"/></div>
+				<div class="item"><img src="img/banner.jpg"/></div>
+			</div>
+			<!-- Carousel nav -->
+			<a class="carousel-control left" href="#myCarousel" data-slide="prev"></a>
+			<a class="carousel-control right" href="#myCarousel" data-slide="next"></a>
+		</div>
+
+		<script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.js" type="text/javascript" charset="utf-8"></script><br />
+		<script type="text/javascript">
+			$('.carousel').carousel({
+				interval:4000,
+			})
+		</script>
+	</body>
+
+</html>

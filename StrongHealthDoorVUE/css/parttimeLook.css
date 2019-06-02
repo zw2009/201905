@@ -1,0 +1,16 @@
+#fullTime {
+	width: 1200px;
+	margin: 0 auto;
+	background: #e1e1e1;
+	padding-bottom: 50px;
+}
+
+div.layui-form {
+	margin-top: 50px !important;
+	width: 500px;
+	margin: 0 auto;
+}
+
+.layui-form-item span {
+	line-height: 38px;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>找回密码</title>
+		<link rel="icon" type="text/css" href="favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/findpwd.css"/>
+	</head>
+	<body>
+		<div class="container">
+			<div class="d-none d-sm-block" style="margin-top: 200px;"></div>
+			<div class="row">
+				<div class="col-md-8 col-12 m-auto">
+					<form action="" method="post" >
+						<input type="hidden" name="_token" value="ef7lli0iqY01sTDJ7sNj9crphSGXBIsRco2NlIJ8"> <input type="hidden" name="site_id" value="1">
+						<div class="mt-5">
+							<div class="card shadow-lg">
+								<div class="card-header bg-red text-light">
+									<h5 class="p-0 m-0"><span class="glyphicon glyphicon-search"></span>找回密码</h5>
+								</div>
+								<div class="card-body">
+									<div class="form-group">
+										<label>帐号</label>
+										<input id="username" type="text" name="username" class="form-control" required="" placeholder="请输入手机号" value="">
+									</div>
+									<div class="form-group">
+										<label>新密码</label>
+										<input id="pwd" type="password" name="password" class="form-control" required="" placeholder="请输入密码" value="">
+									</div>
+									<div class="form-group">
+										<label>确认密码</label>
+										<input id="epwd" type="password" name="password_confirmation" class="form-control" required="" placeholder="请输入密码" value="">
+									</div>
+									<div class="form-group">
+										<label>验证码</label>
+										<div class="input-group mb-3">
+											<input type="text" class="form-control" id="captcha" name="code" placeholder="请输入验证码" value="">
+											<div class="input-group-append">
+												<button class="btn btn-outline-secondary" type="button" id="getCode" onclick="send(this)">发送验证码</button>
+											</div>
+										</div>
+									</div>
+									<a class="btn btn-secondary btn-sm" id="findpwd">更新密码</a>
+								</div>
+								<div class="card-footer text-muted">
+									<a href="health.html" class="mr-2"><span class="glyphicon glyphicon-home"></span>网站首页 </a>
+									<a href="login.html" class="mr-2"><span class="glyphicon glyphicon-plus"></span>登录帐号</a>
+									<a href="register.html" class="mr-2"><span class="glyphicon glyphicon-plus"></span>用户注册</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/md5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/findpwd.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bus.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

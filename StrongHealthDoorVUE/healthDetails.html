@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" type="text/css" href="favicon.ico" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/bus.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/healthDetails.css" />
+		<style type="text/css">
+			.qq_conent{
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<iframe class="headif" src="head.html" width="100%" height="55px" onload="load(1)"></iframe>
+		<div class="banner3">
+			<img src="img/health/commercial.jpg" alt="" />
+		</div>
+		<div class="qq_conent container">
+			<h1>田里一大害草，过去常用来喂猪，如今成“长寿菜”，夏季请别错过</h1>
+			<div class="content-article">
+				12312312313
+			</div>
+		</div>
+		<script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bus.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$.ajax({
+				type:"get",
+				url:"json/health/newsInformation.json",
+				async:true,
+				dataType:'json',
+				success:function(res){
+					var data = res.data;
+					
+					var con = "";
+					
+					$.each(data, function(index,value) {
+						con += '<h1>'+value.title+'</h1>'+
+							  '<div class="content-article">'+value.content+'</div>'
+									
+								
+					});
+					$(".qq_conent").append(con);
+					
+				},
+				error:function(res){
+					
+				}
+			});
+		</script>
+	</body>
+
+</html>

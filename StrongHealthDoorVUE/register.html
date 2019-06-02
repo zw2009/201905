@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" type="text/css" href="favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/register.css"/>
+		<link rel="stylesheet" type="text/css" href="css/findpwd.css"/>
+		<title></title>
+	</head>
+	<body>
+		<div class="container mt-sm-5">
+			<div class="d-none d-sm-block" style="margin-top: 100px;"></div>
+			<div class="mt-5">
+				<div class="row">
+					<div class="col-sm-8 col-12 m-auto">
+						<form action="" method="post">
+							<input type="hidden" name="_token" value=""> <input type="hidden" name="site_id" value="1">
+							<div class="">
+								<div class="card shadow-lg">
+									<div class="card-header bg-info text-light">
+										<h5 class="p-0 m-0"><span class="glyphicon glyphicon-user"></span>会员注册</h5>
+									</div>
+									<div class="card-body">
+										<div class="form-group">
+											<label>帐号</label>
+											<input type="text" id="username" name="username" class="form-control" required="" placeholder="请输入手机号" value="">
+										</div>
+										<div class="form-group">
+											<label>昵称</label>
+											<input type="text" id="uname" name="name" class="form-control" required="" placeholder="请输入的昵称" value="">
+										</div>
+										<div class="form-group">
+											<label>密码</label>
+											<input type="password" id="pwd" name="password" class="form-control" required="" placeholder="请输入不小于5位的登录密码" value="">
+										</div>
+										<div class="form-group">
+											<label>确认密码</label>
+											<input type="password" id="epwd" name="password_confirmation" class="form-control" required="" placeholder="请输入不小于5位的登录密码" value="">
+										</div>
+										<div class="form-group">
+											<label>验证码</label>
+											<div class="input-group mb-3">
+												<input type="text" id="captcha" class="form-control" name="code" placeholder="请输入验证码" value="">
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary" type="button" id="getCode" onclick="send(this)">发送验证码</button>
+												</div>
+											</div>
+										</div>
+										<a class="btn btn-success btn-sm" id="register" onclick="post()">注册帐号</a>
+									</div>
+									<div class="card-footer text-muted">
+										<a href="health.html" class="mr-2"><span class="glyphicon glyphicon-home"></span>网站首页 </a>
+										<a href="login.html" class="mr-2"><span class="glyphicon glyphicon-plus"></span>登录帐号</a>
+										<a href="findpwd.html" class="mr-2"><span class="glyphicon glyphicon-search"></span>找回密码</a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/md5.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/register.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bus.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

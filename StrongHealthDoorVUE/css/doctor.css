@@ -1,0 +1,164 @@
+.doctor {
+				padding: 30px 20px;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.doctor .doctor-left {
+				display: table-cell;
+				text-align: center;
+			}
+			
+			.doctor .doctor-left img {
+				width: 380px;
+			}
+			
+			.doctor .doctor-right {
+				float: right;
+			}
+			
+			.doctor .doctor-right p {
+				padding-top: 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 5;
+				-webkit-box-orient: vertical;
+			}
+			/*videoall*/
+			
+			.vievone {}
+			
+			.vievone h2 {
+				border-bottom: 2px solid #2d82cf;
+				padding-bottom: 10px;
+			}
+			
+			.vievone h2 a {
+				float: right;
+				line-height: 50px;
+				font-size: 18px;
+			}
+			
+			.video-all {
+				float: left;
+				margin: 20px 14px;
+				width: 350px;
+				border-radius: 15px;
+			}
+			
+			.video-all video {
+				border-top-left-radius: 15px;
+				border-top-rIght-radius: 15px;
+				width: 350px;
+				height: 200px;
+			}
+			
+			.video-all h4 {
+				background: #ccc;
+				font-size: 20px;
+				margin: 0;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				border-bottom-left-radius: 15px;
+				border-bottom-rIght-radius: 15px;
+			}
+			
+			/*video的背景颜色*/
+			.vjs-poster{
+				background-color: #eee;
+				border-top-left-radius: 15px;
+				border-top-right-radius: 15px;
+			}
+			.video-js{
+				background-color: #fff;
+				border-top-left-radius: 15px;
+				border-top-right-radius: 15px;
+			}
+			/*视频悬停效果展示*/
+			.vievone .video-all{
+				transition: all 1s;
+			}
+			.vievone .video-all:hover{
+				color: #fff;
+				transform:translateY(-10px);
+			}
+			/*video点击效果*/
+			video{
+				outline: none;
+			}
+			
+			/*视频相关的样式*/
+			.video-js .vjs-big-play-button {
+				font-size: 2.5em;
+				line-height: 2.3em;
+				height: 2.5em;
+				width: 2.5em;
+				-webkit-border-radius: 2.5em;
+				-moz-border-radius: 2.5em;
+				border-radius: 2.5em;
+				background-color: #73859f;
+				background-color: rgba(115, 133, 159, .5);
+				border-width: 0.15em;
+			}
+			/* 中间的播放箭头 */
+			
+			.vjs-big-play-button .vjs-icon-placeholder {
+				font-size: 1.63em;
+			}
+			/* 加载圆圈 */
+			
+			.vjs-loading-spinner {
+				font-size: 2.5em;
+				width: 2em;
+				height: 2em;
+				border-radius: 1em;
+				margin-top: -1em;
+				margin-left: -1.5em;
+			}
+			
+			.video-js.vjs-playing .vjs-tech {
+				pointer-events: auto;
+			}
+			/*去除右下角的下载功能*/
+			video::-webkit-media-controls-enclosure {
+		        overflow:hidden;
+		    }
+		    video::-webkit-media-controls-panel {
+		        width: calc(100% + 30px);
+		    }
+		    
+
+
+
+
+.text-overflow() {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.branch-name {
+				display: inline-block;
+				max-width: 1170px;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
+				overflow: hidden;
+				.text-overflow();
+			}
+			.pictext{
+				padding: 0px 20px;
+				border-bottom: 1px solid #ccc;
+			}
+			/*图文专区图片弹性布局*/
+			.imgflex{
+				display: flex;
+			}
+			.imgflex a{
+				margin: 20px;
+			}
+			.imgflex a img{
+				width:250px;
+				height:150px;
+			}

@@ -1,0 +1,45 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-style: normal;
+}
+
+.card {
+	background: #fff;
+	box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175)!important;
+	border-radius: 10px;
+}
+
+.card h5 {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	height: 50px;
+	line-height: 50px;
+	margin: 0;
+	background: #17a2b8!important;
+	color: #fff;
+	font-size: 20px;
+}
+
+.card h5 span {
+	padding-right: 10px;
+	padding-left: 20px;
+}
+
+form {
+	padding: 20px;
+}
+
+.card-footer {
+	padding: .75rem 1.25rem;
+	background-color: rgba(0, 0, 0, .03);
+	border-top: 1px solid rgba(0, 0, 0, .125);
+}
+
+.col-sm-8 {
+	width: 80.666667%;
+}
+
+.container {
+	width: 500px !important;
+}

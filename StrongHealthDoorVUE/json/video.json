@@ -1,0 +1,25 @@
+{
+	"code": 0,
+	"msg": "",
+	"data": [
+		{
+			"src": "video/haishi.mp4",
+			"name":"海氏急救法"
+		},{
+			"src": "video/shencichuan.mp4",
+			"name":"肾穿刺活检术的注意事项"
+		},{
+			"src": "video/xinfei.mp4",
+			"name":"心肺复苏视频"
+		},{
+			"src": "video/chaixian.mp4",
+			"name":"拆线换药"
+		},{
+			"src": "video/feizang.mp4",
+			"name":"肺脏检查"
+		},{
+			"src": "video/guzhe.mp4",
+			"name":"骨折固定"
+		}
+	]
+}

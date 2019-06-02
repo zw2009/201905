@@ -1,0 +1,114 @@
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+a{text-decoration: none;}
+.header {
+	height: 55px;
+	width: 100%;
+	background: rgba(0, 0, 0, .7);
+}
+.header img{
+	width: 160px;
+}
+.header .nav {
+	width: 1200px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	overflow: hidden;
+}
+
+.header .nav .nav-left {
+	float: left;
+	margin: 0;
+}
+
+.header .nav .nav-right {
+	float: right;
+	margin: 0;
+	
+}
+
+.header .nav ul {
+	display: flex;
+}
+
+.header .nav ul li {
+	height: 55px;
+	line-height: 55px;
+	box-sizing: border-box;
+	margin-right: 1px;
+}
+
+.header .nav ul.nav-left li a {
+	color: #fff;
+	height: 55px;
+	line-height: 55px;
+	margin: 0 30px 10px;
+	padding-bottom: 10px;
+	font-size: 16px;
+}
+
+.header .nav ul.nav-left li:hover a {
+	color: #2d82cf;
+	border-bottom: 3px solid #2d82cf;
+}
+
+.header .nav ul.nav-left li.cur>a {
+	color: #2d82cf;
+	border-bottom: 3px solid #2d82cf;
+}
+.header .nav ul.nav-right{
+	line-height: 55px;
+	color: #fff;
+}
+.header .nav ul.nav-right a{
+	color: #fff;
+	padding: 0 20px;
+	
+}
+.header .nav ul.nav-right a:hover{
+	text-decoration: underline;
+}
+.header .nav ul.nav-right li {
+	position: relative;
+	background: #094986;
+	overflow: hidden;
+	
+}
+.header .nav ul.nav-right li span{
+	background:rgba(0,100,255,0.5);
+	width: 100px;
+	height: 55px;
+	position: absolute;
+	left:-100px;
+	top: -55px;
+	transition: all 0.5s;
+}
+.header .nav ul.nav-right li:hover>span{
+	top: 0;
+	left: 0;
+}
+
+.header .nav ul.nav-right li.cur {
+	background: #0370d7;
+}
+
+.header .nav ul.nav-right li a {
+	color: #fff;
+	width: 80px;
+	display: block;
+	text-align: center;
+}
+/*进入医疗云*/
+#inStorng{
+	color: #fff;
+	width: 100px;
+	text-align: center;
+	cursor: pointer;
+}
