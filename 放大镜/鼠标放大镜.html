@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.tab{
+				position: relative;
+				background: #ccc;
+				width: 430px;
+				height: 430px;
+				margin: 200px auto;
+			}
+			.bd{
+				
+				width: 430px;
+				height: 430px;
+				border: 1px solid #ccc;
+				position: relative;
+				overflow: hidden;
+				
+			}
+			.zoom{
+				width: 218px;
+				height:218px;
+				background: rgba(0,0,0,0.4);
+				cursor: move;
+				position: absolute;
+				left: -218px;
+			}
+			.bigimg{
+				width: 430px;
+				height: 430px;
+				position: absolute;
+				right: -440px;
+				top: 0;
+				background: url(img/big.jpg) no-repeat 0 0 ;
+				display: none;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="tab">
+			
+		
+		<div class="bd">
+			<div class="zoom">
+				
+			</div>
+			<img src="img/small.jpg"/>
+		</div>
+			<div class="bigimg">
+				
+			</div>
+		</div>
+		<script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			$(".bd").mousemove(function(e){
+				var x = e.pageX;
+				var y = e.pageY;
+				bdl = $(".bd").offset().left;
+				bdt = $(".bd").offset().top;
+				zoomW = $(".zoom").outerWidth();
+				zoomH = $(".zoom").outerHeight();
+				bdW = $('.bd').outerWidth();
+				bdH = $('.bd').outerHeight();
+				var dx = x-bdl-zoomW/2;
+				var dy = y-bdt-zoomH/2;
+				
+				$(".zoom").css({"left":dx+'px',"top":dy+'px'});
+				
+				var zooml =parseFloat($(".zoom").css("left")) ; //获取放大镜左定位置
+				var zoomt =parseFloat($(".zoom").css("top")) ; //获取放大镜右定位置
+				
+				//放大镜到最右边的最大值和最下边的最大值
+				var maxW = bdW - zoomW -2;
+				var maxH = bdH - zoomH -2;
+				
+				if(zooml<=0){
+					//左边界
+					$(".zoom").css("left",'0px');
+					zooml = 0; //镜片移动到左边界时 让zooml为0
+					
+				}else if(zooml >= maxW){
+					//右边界
+					$(".zoom").css("left",maxW+'px');
+					
+					zooml = maxW;
+					
+				}
+				
+				if(zoomt<=0){
+					//上边界
+					$(".zoom").css("top",'0px');
+					zoomt = 0;//镜片移动到上边界时 让zoomt为0
+					
+				}else if(zoomt >= maxH){
+					//下边界
+					$(".zoom").css("top",maxH+'px');
+					
+					zoomt = maxH;
+				}
+				
+				//大图显示
+				var bagscale = (bdW/zoomW*100) + '%';
+				var posX,posY;
+				posX = -zooml * (bdW/zoomW) + 'px';
+				posY = -zoomt * (bdH/zoomH) + 'px';
+				//显示大图  放大 背景定位 根据放大镜
+				$(".bigimg").css({
+					"display":"block",
+					"background-size":bagscale,
+					"backgroundPositionX":posX,
+					"backgroundPositionY":posY
+				});
+			})
+			
+			$(".bd").mouseleave(function(){
+				$(".zoom").css("left",'-218px');
+				
+				//大图隐藏
+				$(".bigimg").hide();
+			})
+			
+			//alert(430/218) //1.9724
+		</script>
+	</body>
+</html>

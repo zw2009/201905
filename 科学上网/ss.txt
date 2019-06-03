@@ -1,0 +1,23 @@
+Host:
+
+j0.0bad.com
+j1.0bad.com
+j2.0bad.com
+j3.0bad.com
+j4.0bad.com
+j5.0bad.com
+hk.0bad.com
+sg01.0bad.com
+
+
+
+
+Port: 39608
+
+º”√‹∑Ω Ω£∫ aes-128-cfb
+
+SSR Protocol:   origin
+
+SSR Obfs:   plain
+
+√‹¬Î£∫_40788
