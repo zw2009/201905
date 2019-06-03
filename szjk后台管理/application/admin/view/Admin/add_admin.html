@@ -1,0 +1,70 @@
+{extend name="Common:base" /}
+{block name="main"}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{$page_title}</h3>
+	</div>
+	<div class="panel-body">
+		<form method="post" id="myForm" action="{:url('update_admin')}" class="form-horizontal" autocomplete="off">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 真实姓名：</label>
+			<div class="col-sm-6">
+				<input type="text" name="real_name" class="form-control" value="{$data.real_name|default=''}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 角色：</label>
+			<div class="col-sm-6">
+				<select name="role_id" class="form-control">
+					<option value="0">请选择角色</option>
+					{present name="role"}
+					{volist name="role" id="vo"}
+					<option value="{$vo.id}" {present name="data.role_id"}{eq name="data.role_id" value="$vo['id']"}selected{/eq}{/present}>{$vo.role_name}</option>
+					{/volist}
+					{/present}
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 登录名：</label>
+			<div class="col-sm-6">
+				<input type="text" name="login_name" class="form-control" value="{$data.login_name|default=''}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 密码：</label>
+			<div class="col-sm-6">
+				<input type="password" name="password" class="form-control" value="">
+				{present name="data"}<p class="ps">留空则不修改</p>{/present}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 确认密码：</label>
+			<div class="col-sm-6">
+				<input type="password" name="repassword" class="form-control" value="">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 状态：</label>
+			<div class="col-sm-6">
+				<label class="checkbox-inline">
+					<input type="radio"  name="status" value="1" {notpresent name="data"}checked{else/}{eq name="data.status" value="1"}checked{/eq}{/notpresent}> 开通
+				</label>
+				<label class="checkbox-inline">
+					<input type="radio"  name="status" value="0" {present name="data.status"}{eq name="data.status" value="0"}checked{/eq}{/present}> 禁用
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-6">
+				{present name="data"}
+					<input type="hidden" name="id" value="{$data.id}">
+				{/present}
+				<button type="submit" class="btn btn-primary" form="myForm">确定</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+{/block}

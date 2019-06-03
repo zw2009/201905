@@ -1,0 +1,66 @@
+{extend name="Common:base" /}
+{block name="main"}
+	<div class="form-group">
+		{notempty name="Request.param.parent_id" value="0"}
+		<a onclick="window.history.back()" class="btn btn-primary btn-sm">&lt;&lt; 返回</a>
+		{/notempty}
+		<a href="{:url('add_node',['m'=>$m,'parent_id'=>$Request.param.parent_id])}" class="btn btn-danger btn-sm">
+			<span class="glyphicon glyphicon-plus"></span> 
+			新增节点
+		</a>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form method="post" action="{:url('node_listorder')}">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>排序</th>
+						<th>节点名称</th>
+						<th>模型</th>
+						<th>控制器</th>
+						<th>方法</th>
+						<th class="text-center">是否显示</th>
+						<th class="text-center">状态</th>
+						<th class="text-right">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{notempty name="data"}
+					{volist name="data" id="node"}
+					<tr>
+						<td width="70"><input name="listorder[{$node.id}]" value="{$node.listorder}" class="listorder"></td>
+						<td><a href="{:url('',['m'=>$m,'parent_id'=>$node.id])}">{$node.node_name}</a></td>
+						<td>{$node.m}</td>
+						<td>{$node.c}</td>
+						<td>{$node.a|}</td>
+						<td class="text-center">
+							<a href="{:url('node_display_status',array('id'=>$node['id']))}">
+								{$node.is_display|yes_or_no}
+							</a>
+						</td>
+						<td class="text-center">
+							<a href="{:url('node_status',array('id'=>$node['id']))}">
+								{$node.status|yes_or_no}
+							</a>
+						</td>
+						<td class="text-right">
+							<a href="{:url('edit_node',array('id'=>$node['id']))}">编辑</a>
+							<a href="{:url('del_node',array('id'=>$node['id']))}" onclick="javascript:return confirm('确定要删除该记录？');">删除</a>
+						</td>
+					</tr>
+					{/volist}
+					{/notempty}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td><label class="text-info">排序<input type="submit" class="invisible"></label></td>
+						<td colspan="99"></td>
+					</tr>
+				</tfoot>
+			</table>
+			</form>
+		</div>
+	</div>
+{/block}

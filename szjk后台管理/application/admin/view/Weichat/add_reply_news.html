@@ -1,0 +1,272 @@
+{extend name="Common:base" /}
+{block name="script"}
+<style>
+	.item-heading{background:#eee;height:34px;line-height:34px;padding:0 15px;margin-bottom:15px;position:relative}
+	.close{position:absolute;right:0;height:34px;line-height:34px;width:34px;text-align:center;}
+</style>
+<link rel="stylesheet" href="__PLUGS__/kindeditor/themes/default/default.css" />
+<script charset='utf-8'   src='__PLUGS__/kindeditor/kindeditor-all.js'></script>
+<script charset='utf-8'   src='__PLUGS__/kindeditor/lang/zh-CN.js'></script>
+<script type="text/javascript" src="__PLUGS__/tmodjs.js"></script>
+{/block}
+{block name="main"}
+<form method="post" id="myForm" action="{:url('update_reply')}" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">回复规则</h3>
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">回复规则名称：</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="title" value="{$data.title|default=''}">
+				<span class="help-block">您可以给这条规则起一个名字, 方便下次修改和查看. </span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">触发关键词：</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="keywords" value="{$data.keywords|default=''}">
+				<span class="help-block">当用户的对话内容符合以上的关键字定义时，会触发这个回复定义. </span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">状态：</label>
+			<div class="col-sm-6">
+				<label class="radio-inline">
+					<input name="status" value="1" type="radio" {present name="data"}{eq name="data.status" value="1"}checked{/eq}{else/}checked{/present}>
+					启用
+				</label>
+				<label class="radio-inline">
+					<input name="status" value="0" type="radio" {present name="data"}{eq name="data.status" value="0"}checked{/eq}{/present}>
+					禁用
+				</label>
+				<span class="help-block">您可以临时禁用这条回复.</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">优先级：</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="listorder" value="{$data.listorder|default='100'}">
+				<span class="help-block">数字越小越靠前，最大不得超过254. </span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="alert alert-info" role="alert">
+	<span class="glyphicon glyphicon-info-sign"></span>最多可以添加8组图文
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">回复内容</h4>
+	</div>
+	<div class="panel-body news-list"></div>
+</div>
+<script id="news-form" type="text/html">
+	<div class="news-item">
+		<div class="item-heading">
+			<a type="button" class="close">×</a>
+			<b>图文详情</b>
+		</div>
+		<div class="item-body">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">标题：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="news[<%index%>][title]" value="">
+					<span class="help-block">50字以内. </span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">封面：</label>
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input type="text" class="form-control" name="news[<%index%>][pic]" readonly id="image_<%index%>">
+						<label class="input-group-addon upimg" data-index="<%index%>">上传图片</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">描述：</label>
+				<div class="col-sm-6">
+					<textarea name="news[<%index%>][description]" class="form-control" placeholder="添加要回复的内容" rows="4">{$data.detail.description|default=''}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否编辑图文详情：</label>
+				<div class="col-sm-6">
+					<label class="radio-inline">
+						<input value="1" name="news[<%index%>][is_edit]" type="checkbox" class="isEdit" data-index="<%index%>">
+						启用
+					</label>
+					<span class="help-block">编辑详情可以展示这条图文的详细内容, 可以选择不编辑详情, 那么这条图文将直接链接至下方的原文地址中</span>
+				</div>
+			</div>
+			<div class="form-group edit_area_<%index%>" style="display:none;">
+				<label class="col-sm-3 control-label">详情：</label>
+				<div class="col-sm-6">
+					<textarea name="news[<%index%>][content]" class="edit_<%index%>"  rows="4">{$data.content|default=''}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">来源：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="news[<%index%>][url]" value="{$data.news.url|default=''}">
+					<span class="help-block">填写链接的url </span>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="news-list-form" type="text/html">
+	<%each data as value index%>
+	<div class="news-item">
+		<div class="item-heading">
+			<a type="button" class="close">×</a>
+			<b>图文详情</b>
+		</div>
+		<div class="item-body">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">标题：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="news[<%index%>][title]" value="<%value.title%>">
+					<span class="help-block">50字以内. </span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">封面：</label>
+				<div class="col-sm-6">
+					<div class="input-group">
+						<input type="text" class="form-control" name="news[<%index%>][pic]" readonly id="image_<%index%>" value="<%value.pic%>">
+						<label class="input-group-addon upimg" data-index="<%index%>">上传图片</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">描述：</label>
+				<div class="col-sm-6">
+					<textarea name="news[<%index%>][description]" class="form-control" placeholder="添加要回复的内容" rows="4"> <%value.description%></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">是否编辑图文详情：</label>
+				<div class="col-sm-6">
+					<label class="radio-inline">
+						<input value="1" name="news[<%index%>][is_edit]" type="checkbox" class="isEdit" data-index="<%index%>" <%if value.content!=''%>checked<%/if%>>
+						启用
+					</label>
+					<span class="help-block">编辑详情可以展示这条图文的详细内容, 可以选择不编辑详情, 那么这条图文将直接链接至下方的原文地址中</span>
+				</div>
+			</div>
+			<div class="form-group edit_area edit_area_<%index%>" <%if value.content==''%>style="display:none;"<%/if%>>
+				<label class="col-sm-3 control-label">详情：</label>
+				<div class="col-sm-6">
+					<textarea name="news[<%index%>][content]" class="edit_<%index%>"  rows="4"><%value.content%></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">来源：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="news[<%index%>][url]" value="<%value.url%>">
+					<span class="help-block">填写链接的url </span>
+				</div>
+			</div>
+			<input type="hidden" name="news[<%index%>][id]" value="<%value.id%>">
+		</div>
+	</div>
+	<%/each%>
+</script>
+<div class="form-group">
+	<div class="col-sm-12">
+		{notempty name="data"}
+		<input type="hidden" name="id" value="{$data.id}">
+		{/notempty}
+		<input type="hidden" name="type" value="news">
+		<button type="submit" class="btn btn-primary">确&emsp;定</button>
+		<a class="btn btn-info add-news-btn">添加一组回复</a>
+	</div>
+</div>
+</form>
+<script>
+    var index=0;
+    var K=window.KindEditor;
+    var options={
+        cssPath : '__PLUGS__/kindeditor/plugins/code/prettify.css',
+        uploadJson : "{:url('Admin/Common/editor_upload')}",
+        fileManagerJson : "{:url('Admin/Common/file_manager')}",
+        allowFileManager : true,
+        afterBlur: function () { this.sync(); }
+    };
+    function addNews(is_edit){
+        //最多添加8组图文
+		if($('.news-item').size()>=8){
+		    alert('最多添加8组图文');
+		    return false;
+		}
+		//判断新增还是修改
+        var data={$data.news|default=''|json_encode};
+		if(is_edit==true && data!=''){
+		    index=data.length>0?data.length-1:0;
+            $('.news-list').append(template('news-list-form', {data:data}));
+            $('.isEdit').each(function(){
+                var ele='.edit_area_'+$(this).data('index');
+                var edit='.edit_'+$(this).data('index');
+                if($(this).is(':checked')==true){
+                    $(ele).show();
+                    //编辑器
+                    K.create(edit,options);
+                }else{
+                    $(ele).hide();
+                }
+			})
+		}else{
+            $('.news-list').append(template('news-form', {index: index}));
+		}
+        //显示编辑器
+        $('.isEdit').click(function(){
+            var ele='.edit_area_'+$(this).data('index');
+            var edit='.edit_'+$(this).data('index');
+            if($(this).is(':checked')==true){
+                $(ele).show();
+                //编辑器
+                K.create(edit,options);
+			}else{
+				$(ele).hide();
+			}
+		});
+        //图片上传
+		$('.upimg').click(function(){
+            var Image = K.editor(options);
+		    var ele='#image_'+$(this).data('index');
+            Image.loadPlugin('image', function() {
+                Image.plugin.imageDialog({
+                    imageUrl : K(ele).val(),
+                    clickFn : function(url) {
+                        K(ele).val(url);
+                        Image.hideDialog();
+                    }
+                });
+            });
+		})
+        index++;
+        //删除
+        $('.close').unbind('click').click(function(){
+            if($('.news-item').size()<=1){
+                alert('至少添加1组图文');
+                return false;
+            }
+            $(this).parents('.news-item').remove();
+        });
+    }
+
+	$(document).ready(function(){
+	    //初始化加载一组回复
+		addNews(true);
+		//添加一组回复
+	    $('.add-news-btn').click(function(){
+            addNews();
+
+		})
+	})
+
+</script>
+{/block}

@@ -1,0 +1,26 @@
+{extend name="Common:base" /}
+{block name='class'}index_article{/block}
+{block name='body'}
+<header>
+	<div class="header">
+		<div class="nav-left">
+			<a class="back" href="{:url('Index/index')}"></a>
+		</div>
+		<div class="header-title">{$data.name}</div>
+	</div>
+</header>
+{notempty name="subcate"}
+<div class="nav">
+	<div class="nav-list">
+		<div class="nav-wrap">
+			{volist name="subcate" id="vo"}
+			<a class="nav-item {eq name='vo.id' value='$Request.param.cid'}active{/eq}" href="{:url('lists',['cid'=>$vo.id])}">{$vo.name}</a>
+			{/volist}
+		</div>
+	</div>
+</div>
+{/notempty}
+<div class="inner-cont">
+	{$data.content}
+</div>
+{/block}

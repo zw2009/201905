@@ -1,0 +1,115 @@
+{extend name="Common:base" /}
+{block name="main"}
+<style>
+	.chart{
+		background:#fff;
+		padding:10px;
+		margin-bottom: 15px;
+	}
+	.chart canvas{
+		display: block;
+		width:100%;
+		height:300px;
+	}
+	.chart-labels{
+		height:40px;
+		line-height:40px;
+		color:#666;
+		text-align:right;
+	}
+	.chart-labels .labels{
+		display: inline-block;
+	}
+	.chart-labels i{
+		vertical-align: middle;
+		display: inline-block;
+		width:15px;
+		height:15px;
+	}
+	.chart-labels span{
+		vertical-align: middle;
+		padding-right:10px;
+	}
+	.chart-title{
+		height:40px;
+		line-height: 40px;
+		text-align: center;
+	}
+	.show-num-mod {
+		background-color: #fff;
+		border:1px solid #cdcdcd;
+		height:80px;
+	}
+	.show-num-mod dt {
+		float:left;
+		width:30%;
+		height:78px;
+		padding:22px 0;
+		text-align:center;
+		border-right:1px solid #cdcdcd;
+	}
+	.show-num-mod dt i{
+		font-size:32px;
+	}
+	.show-num-mod dd{
+		float:left;
+		width:70%;
+		padding:9px;
+		text-align:center;
+	}
+	.show-num-mod dd strong{
+		display:block;
+		height:30px;
+		line-height:30px;
+		font-size:20px;
+	}
+	.show-num-mod dd span{
+		display:block;
+		height:30px;
+		line-height:30px;
+	}
+</style>
+<div class="row">
+	<div class="col-lg-4 col-xs-6">
+		<div class="small-box bg-yellow">
+			<div class="inner">
+				<h3>{$team|default='0'}</h3>
+				<p>医疗团队</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-person-add"></i>
+			</div>
+			<a href="{:url('Article/team')}" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+	<div class="col-lg-4 col-xs-6">
+		<div class="small-box bg-aqua">
+			<div class="inner">
+				<h3>{$linkstore|default='0'}</h3>
+				<p>连锁机构</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-bag"></i>
+			</div>
+			<a href="{:url('Article/linkstore')}" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+	<div class="col-lg-4 col-xs-6">
+		<div class="small-box bg-green">
+			<div class="inner">
+				<h3>{$service|default='0'}</h3>
+				<p>服务科室</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+			<a href="{:url('Article/service')}" class="small-box-footer">查看详情 <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function(){
+
+    })
+</script>
+{/block}

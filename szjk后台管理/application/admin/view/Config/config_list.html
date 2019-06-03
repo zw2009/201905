@@ -1,0 +1,59 @@
+{extend name="Common:base" /}
+{block name="main"}
+	<div class="alert alert-info">
+		<h5 class="text">配置说明：</h5>
+		<p class="text-danger">配置项的修改、删除需由技术人员确认、操作，非技术人员请谨慎操作</p>
+	</div>
+	<div class="form-group">
+		<a href="{:url('index')}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-cog"></span> 设置配置</a>
+		<a href="{:url('add_config')}" class="btn btn-primary"><sapn class="glyphicon glyphicon-plus"></sapn> 添加配置项</a>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>配置名称</th>
+						<th>配置标识</th>
+						<th>类型</th>
+						<th class="text-center">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{volist name="config" id="conf"}
+					<tr>
+						<td>{$conf.config_name}</td>
+						<td>{$conf.config_code}</td>
+						<td></td>
+						<td class="text-center">
+							<a href="{:url('edit_config',array('id'=>$conf['id']))}">编辑</a>
+							<a href="{:url('del_config',array('id'=>$conf['id']))}"  onclick="javascript:return confirm('确定要删除该记录？');" >删除</a>
+						</td>
+					</tr>
+					{present name="conf.child"}
+					{volist name="conf.child" id="fig"}
+					<tr>
+						<td>&emsp;|— {$fig.config_name}</td>
+						<td>{$fig.config_code}</td>
+						<td>
+							{eq name="fig.input_type" value="1"}文本类型{/eq}
+							{eq name="fig.input_type" value="2"}单选类型{/eq}
+							{eq name="fig.input_type" value="3"}复选类型{/eq}
+							{eq name="fig.input_type" value="4"}文本域类型{/eq}
+							{eq name="fig.input_type" value="5"}富文本域类型{/eq}
+							{eq name="fig.input_type" value="6"}文件（图片）类型{/eq}
+						</td>
+						<td class="text-center">
+							<a href="{:url('edit_config',array('id'=>$fig['id']))}">编辑</a>
+							<a href="{:url('del_config',array('id'=>$fig['id']))}"  onclick="javascript:return confirm('确定要删除该记录？');" >删除</a>
+						</td>
+					</tr>
+					{/volist}
+					{/present}
+					{/volist}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{/block}

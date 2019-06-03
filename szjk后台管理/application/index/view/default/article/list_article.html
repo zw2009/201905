@@ -1,0 +1,39 @@
+{extend name="Common:base" /}
+{block name='title'}{$cate.name}_{$config.webname}{/block}
+{block name='keywords'}{$cate.seo_keywords}{/block}
+{block name='description'}{$cate.seo_description}{/block}
+{block name='class'}list_article{/block}
+{block name='body'}
+<div class="inner-banner"></div>
+<div class="inner-main">
+    <div class="pleft">
+        <div class="tbox">
+            <b>{$topcate.name}</b>
+            <small>{$topcate.name_en|strtoupper}</small>
+        </div>
+        <ul class="mlist">
+            <li {eq name="top_id" value="$Request.param.cid"}class="active"{/eq}><a href="{:url('lists',['cid'=>$topcate.id])}">全部</a></li>
+            {volist name="subcate" id="vo"}
+            <li {eq name="vo.id" value="$Request.param.cid"}class="active"{/eq}><a href="{:url('lists',['cid'=>$vo.id])}">{$vo.name}</a></li>
+            {/volist}
+        </ul>
+    </div>
+    <div class="pright">
+        <div class="plist">
+            {volist name="lists" id="vo"}
+            <div class="item">
+                <div class="item-info">
+                    <div class="title">{$vo.title}</div>
+                    <div class="details">{$vo.description}</div>
+                    <div class="more"><a href="{:url('info',['id'=>$vo.id])}"></a></div>
+                </div>
+            </div>
+            {/volist}
+        </div>
+        <div  class="pageview">
+            {$page}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+{/block}

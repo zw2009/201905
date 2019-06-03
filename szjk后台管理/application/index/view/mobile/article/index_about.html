@@ -1,0 +1,25 @@
+{extend name="Common:base" /}
+{block name='class'}index_about{/block}
+{block name='body'}
+<header>
+    <div class="header">
+        <div class="nav-left">
+            <a class="back" href="{:url('Index/index')}"></a>
+        </div>
+        <div class="header-title">{$data.name}</div>
+    </div>
+</header>
+<div class="inner-list">
+    <div class="ptitle"></div>
+    {volist name="subcate" id="vo" offset="0" length='5'}
+    <div class="item item_{$i}">
+        <div class="item-img"><img src="__IMG__/about_img_{$i}.png" class="pimg"></div>
+        <div class="pcont">
+            <div class="title">{$vo.name} </div>
+            <div class="content">{$vo.seo_description} </div>
+            <div class="more"><a href="{:url('lists',['cid'=>$vo.id])}">更多</a></div>
+        </div>
+    </div>
+    {/volist}
+</div>
+{/block}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{block name='title'}{$config.webname|default="思众健康"}{/block}</title>
+    <meta name="keywords" content="{block name='keywords'}{$config.seo_keywords}{/block}" />
+    <meta name="description" content="{block name='description'}{$config.seo_description}{/block}" />
+    <script type="text/javascript" src="__PLUGS__/jquery-1.10.2.min.js"></script>
+    <link href="__PLUGS__/FlexSlider/flexslider.css" rel="stylesheet">
+    <script type="text/javascript" src="__PLUGS__/FlexSlider/jquery.flexslider.js"></script>
+    {block name="script"}{/block}
+    <link href="__CSS__/css.css" rel="stylesheet">
+    <script>
+        $(document).ready(function(e) {
+            //pc端下拉
+            $(".pcmenu_xun").hover(function(){
+                $(this).addClass('active').find(".pcmenu_drop").slideToggle();
+            },function(){
+                $(this).removeClass('active').find(".pcmenu_drop").slideToggle();
+            });
+        });
+    </script>
+</head>
+<body class="{block name='class'}{/block}">
+<div id="header">
+    <div class="top">
+        <div class="top-cont">
+            <ul>
+                <li>欢迎您光临思众健康官方网站！</li>
+                <!--<li><a href="" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('{dede:global.cfg_basehost/}');">设为首页</a></li>
+                <li><a href="javascript:window.external.AddFavorite('{dede:global.cfg_basehost/}','{dede:global.cfg_webname/}')">收藏本站</a></li>-->
+            </ul>
+        </div>
+    </div>
+    <div class="pctop">
+        <div class="pctop_nei">
+            <div class="pclogo"></div>
+            <div class="pctop_right">
+                <div class="pcmenu">
+                    <div class="pcmenu_xun">
+                        <a href="{:url('Index/index')}" class="pcmenu_a">首页</a>
+                    </div>
+                    {volist name="menu" id="vo"}
+                    <div class="pcmenu_xun">
+                        <a href="{:url('Article/lists',['cid'=>$vo.id])}" class="pcmenu_a">{$vo.name}</a>
+                        {notempty name="vo.child"}
+                        <div class="pcmenu_drop">
+                            {volist name="vo.child" id="sub"}
+                            <a href="{:url('Article/lists',['cid'=>$sub.id])}">{$sub.name}</a>
+                            {/volist}
+                        </div>
+                        {/notempty}
+                    </div>
+                    {/volist}
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+{block name="body"}{/block}
+<div id="footer">
+    <div class="footer">
+        <div class="logo">
+            <img src="__IMG__/logo_footer.png">
+        </div>
+        <div class="cont">
+            <ul>
+                {volist name="cfooter" id="vo"}
+                <li><a href="{:url('Article/lists',['cid'=>$vo.id])}">{$vo.name}</a></li>
+                {/volist}
+            </ul>
+            <div class="copyright">
+                {$config.copyright}
+                <a href="http://www.miitbeian.gov.cn">湘ICP备17000762号</a>
+            </div>
+        </div>
+        <div class="qrcode">
+            <img src="__IMG__/qrcode.png">
+        </div>
+    </div>
+</div>
+</body>
+</html>

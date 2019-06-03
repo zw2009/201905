@@ -1,0 +1,44 @@
+{extend name="Common:base" /}
+{block name="script"}
+	
+{/block}
+{block name="func"}
+	<a href="{:url('admin_account')}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-share-alt"></span> 返回列表</a>
+{/block}
+{block name="main"}
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="bs-callout bs-callout-warning tips">
+				<h5 class="text">账务修正说明：</h5>
+				<p class="text">1、所有账务类目都区分正负，即填写100为增加100，-100为减少100</p>
+			</div>
+		</div>
+		<div class="col-sm-10 col-sm-offset-1">
+			<form class="form-horizontal" method="post" id="myForm">
+				<div class="form-group">
+					<label class="control-label">平台费：</label>
+					<input type="text" name="use_fee" class="form-control" value="">
+					<span class="tips">&yen; {$data.use_fee}</span>
+				</div>
+				<div class="form-group">
+					<label class="control-label">奖池奖金：</label>
+					<input type="text" name="bonus" class="form-control" value="">
+					<span class="tips">{$data.bonus}</span>
+				</div>
+				<div class="form-group">
+					<label class="control-label">慈善基金：</label>
+					<input type="text" name="love_fund" class="form-control" value="">
+					<span class="tips">{$data.love_fund}</span>
+				</div>
+				<div class="form-group">
+					<label class="control-label"></label>
+					{present name="data"}
+					<input type="hidden" name="gourl" value="{$Think.server.http_referer}">
+					{/present}
+					<button type="submit" class="btn btn-danger">确定</button>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+{/block}

@@ -1,0 +1,80 @@
+{extend name="Common:base" /}
+{block name="script"}
+	<script>
+	$(document).ready(function(){
+		$('input.top-node').click(function(){
+			var node_id=$(this).val();
+			if($(this).is(':checked')==true){
+				$('input[name="node_id['+node_id+'][]"]').each(function(i,val){
+	   				if(val.checked==false){
+	    				val.checked=true;
+	   				}
+	   			});
+			}else{
+				$('input[name="node_id['+node_id+'][]"]').each(function(i,val){
+	   				if(val.checked==true){
+	    				val.checked=false;
+	   				}
+	   			});
+			}
+		});
+	})
+	</script>
+{/block}
+{block name="main"}
+	<div class="form-group">
+		<a href="{:url('role')}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-share-alt"></span> 返回列表</a>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">角色名称：{$role.role_name}</h3>
+		</div>
+		<div class="panel-body">
+		<form method="post">
+			<table class="table table-bordered role_node">
+				{volist name="all_node" id="vo"}
+				<tr>
+					<td class="col-xs-2" rowspan="{$vo.child|count}">
+						<input type="checkbox" class="top-node" value="{$vo.id}" {present name="right"}{in name="vo.id" value="$right"}checked{/in}{/present}> {$vo.node_name}
+					</td>
+					{volist name="vo.child" id="node" offset="0" length="1"}
+					<td class="col-xs-2">
+						<label class="col-xs-3"><input type="checkbox" name="node_id[{$vo.id}][]" value="{$node.id}" {in name="node.id" value="$right"}checked{/in}> {$node.node_name}</label>
+					</td>
+					<td class="col-xs-8">
+						{present name="node.child"}
+						{volist name="node.child" id="sub"}
+						<label class="col-xs-3"><input type="checkbox" name="node_id[{$vo.id}][]" value="{$sub.id}" {in name="sub.id" value="$right"}checked{/in}> {$sub.node_name}</label>
+						{/volist}
+						{/present}
+					</td>
+					{/volist}
+				</tr>
+				{volist name="vo.child" id="node" offset="1"}
+				<tr>
+					<td class="col-xs-2">
+						<label class="col-xs-3"><input type="checkbox" name="node_id[{$vo.id}][]" value="{$node.id}" {in name="node.id" value="$right"}checked{/in}> {$node.node_name}</label>
+					</td>
+					<td class="col-xs-8">
+						{present name="node.child"}
+						{volist name="node.child" id="sub"}
+						<label class="col-xs-3"><input type="checkbox" name="node_id[{$vo.id}][]" value="{$sub.id}" {in name="sub.id" value="$right"}checked{/in}> {$sub.node_name}</label>
+						{/volist}
+						{/present}
+					</td>
+				</tr>
+				{/volist}
+				{/volist}
+				<tr>
+					<td></td>
+					<td>
+						<input type="hidden" name="role_id" value="{$role.id}">
+						<button type="submit" class="btn btn-md btn-danger">保存</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<div class="clear30"></div>
+		</div>
+	</div>
+{/block}

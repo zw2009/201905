@@ -1,0 +1,29 @@
+{extend name="Common:base" /}
+{block name='title'}{$cate.name}_{$config.webname}{/block}
+{block name='keywords'}{$cate.seo_keywords}{/block}
+{block name='description'}{$cate.seo_description}{/block}
+{block name='class'}index_article{/block}
+{block name='body'}
+<div class="inner-banner"></div>
+<div class="inner-main">
+	<div class="pleft">
+		<div class="tbox">
+			<b>{$topcate.name}</b>
+			<small>{$topcate.name_en|strtoupper}</small>
+		</div>
+		<ul class="mlist">
+			{volist name="subcate" id="vo"}
+			<li {eq name="vo.id" value="$data.id"}class="active"{/eq}><a href="{:url('lists',['cid'=>$vo.id])}">{$vo.name}</a></li>
+			{/volist}
+		</ul>
+	</div>
+	<div class="pright">
+		<div class="pcontent">
+			<div class="content">
+				{$data.content}
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+{/block}

@@ -1,0 +1,21 @@
+{extend name="Common:base" /}
+{block name='title'}{$cate.name}_{$config.webname}{/block}
+{block name='keywords'}{$cate.seo_keywords}{/block}
+{block name='description'}{$cate.seo_description}{/block}
+{block name='class'}index_about{/block}
+{block name='body'}
+<div class="inner-banner"></div>
+<div class="inner-main">
+    <div class="ptitle"></div>
+    {volist name="subcate" id="vo" offset="0" length='5'}
+    <div class="item_{$i}">
+        <img src="__IMG__/about_img_{$i}.png" class="pimg">
+        <div class="pcont">
+            <div class="title_en">{$vo.name_en}<a href="{:url('lists',['cid'=>$vo.id])}">更多</a> </div>
+            <div class="title">{$vo.name} </div>
+            <div class="content">{$vo.seo_description} </div>
+        </div>
+    </div>
+    {/volist}
+</div>
+{/block}

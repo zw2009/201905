@@ -1,0 +1,25 @@
+{extend name="Common:base" /}
+{block name="main"}
+	<div class="panel panel-default">
+		<div class="panel-body">
+			{empty name="data"}
+				<p class="text-center">暂无记录</p>
+			{else/}
+			{volist name="data" id="vo"}
+				<div class="panel panel-info">
+					<div class="panel-heading" style="height:40px;">
+						<h3 class="panel-title">
+							<div class="col-xs-3">姓名：{$vo.real_name}</div>
+							<div class="col-xs-3">电话：{$vo.phone}</div>
+							<div class="col-xs-3">加盟区域：{$vo.dist}</div>
+							<div class="col-xs-3 text-right">{$vo.create_time|date="Y-m-d",###}</div>
+						</h3>
+					</div>
+					<div class="panel-body">{$vo.content}</div>
+				</div>
+			{/volist}
+			{/empty}
+			<div>{$page}</div>
+		</div>
+	</div>
+{/block}

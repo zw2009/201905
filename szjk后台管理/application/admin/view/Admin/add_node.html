@@ -1,0 +1,70 @@
+{extend name="Common:base" /}
+{block name="main"}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{$page_title}</h3>
+	</div>
+	<div class="panel-body">
+	<form class="form-horizontal" method="post" id="myForm" action="{:url('update_node')}">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 节点名称：</label>
+			<div class="col-sm-6">
+				<input type="text" name="node_name" class="form-control" value="{$data.node_name|default=''}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 模型：</label>
+			<div class="col-sm-6">
+				<input type="text" name="modules" class="form-control" id="modules" value="{$data.m|default='Admin'}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">控制器：</label>
+			<div class="col-sm-6">
+				<input type="text" name="controller" class="form-control" value="{$data.c|default=''}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">方法：</label>
+			<div class="col-sm-6">
+				<input type="text" name="action" class="form-control" value="{$data.a|default=''}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">参数：</label>
+			<div class="col-sm-6">
+				<input type="text" name="param" class="form-control" value="{$data.param|default=''}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">排序：</label>
+			<div class="col-sm-6">
+				<input type="text" name="listorder" class="form-control" value="{$data.listorder|default=100}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">是否显示：</label>
+			<div class="col-sm-6">
+				<label class="checkbox-inline">
+					<input type="checkbox" name="is_display" value="1" {present name="data"}{eq name="data.is_display" value="1"}checked{/eq}{/present}>
+					是
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-6">
+				{present name="data"}
+				<input type="hidden" name="id" value="{$data.id}">
+				<input type="hidden" name="gourl" value="{$Think.server.http_referer}">
+				<input type="hidden" name="parent_id" value="{$data.parent_id|default=0}">
+				{else/}
+				<input type="hidden" name="parent_id" value="{$Request.param.parent_id|default=0}">
+				{/present}
+				<button type="submit" class="btn btn-primary" form="myForm">确定</button>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+{/block}

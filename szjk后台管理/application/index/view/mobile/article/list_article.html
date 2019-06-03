@@ -1,0 +1,38 @@
+{extend name="Common:base" /}
+{block name='class'}list_article{/block}
+{block name='body'}
+<header>
+	<div class="header">
+		<div class="nav-left">
+			<a class="back" href="{:url('Index/index')}"></a>
+		</div>
+		<div class="header-title">{$topcate.name}</div>
+	</div>
+</header>
+{notempty name="subcate"}
+<div class="nav">
+	<div class="nav-list">
+		<div class="nav-wrap">
+			{volist name="subcate" id="vo"}
+			<a class="nav-item {eq name='vo.id' value='$Request.param.cid'}active{/eq}" href="{:url('lists',['cid'=>$vo.id])}">{$vo.name}</a>
+			{/volist}
+		</div>
+	</div>
+</div>
+{/notempty}
+<div class="inner-list">
+	{volist name="lists" id="vo"}
+	<div class="item">
+		<a class="item-title" href="{:url('info',['id'=>$vo.id])}">{$vo.title}</a>
+		<div class="item-info">更新时间：{$vo.update_time|date="Y-m-d H:i:s",###}</div>
+		<div class="item-cont">{$vo.description}</div>
+	</div>
+	{/volist}
+	<div class="pageview">{$page}</div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.nav-wrap').width(9*$('.nav-item').size()+"rem");
+    })
+</script>
+{/block}

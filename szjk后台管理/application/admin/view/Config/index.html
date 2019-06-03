@@ -1,0 +1,111 @@
+{extend name="Common:base" /}
+{block name="main"}
+	<div class="form-group">
+		<a href="{:url('add_config')}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-plus"></span> 新增配置</a>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				{volist name="config" id="conf"}
+					<li role="presentation" {eq name="i" value="1"}class="active"{/eq}>
+						<a href="#{$conf.config_code}" role="tab" data-toggle="tab">
+							<div class="top-arrow"></div>
+							{$conf.config_name}
+						</a>
+					</li>
+				{/volist}
+			</ul>
+			<div class="clear20"></div>
+			<!-- Tab panes -->
+			<form class="form-horizontal" method="post" enctype="multipart/form-data">
+			<div class="tab-content col-sm-10 col-sm-offset-1">
+				{volist name="config" id="conf"}
+					<div  class="tab-pane {eq name='i' value='1'}active{/eq}" id="{$conf.config_code}">
+						{present name="conf.child"}
+						{volist name="conf.child" id="vo"}
+							<!-- 文本类型 -->
+							{eq name="vo.input_type" value="1"}
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{$vo.config_name}：</label>
+								<div class="col-sm-6">
+									<input type="text" name="{$vo.id}" class="form-control" value="{$vo.value}">
+									<p class="tips">{$vo.remark}</p>
+								</div>
+							</div>
+							{/eq}
+							<!-- 单选类型 -->
+							{eq name="vo.input_type" value="2"}
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{$vo.config_name}：</label>
+								<div class="col-sm-6">
+									{volist name="vo.select_range" id="range"}
+									<label class="radio-inline">
+										<input type="radio" name="{$vo.id}" value="{$range[0]}" {eq name="vo.value" value="$range[0]"}checked{/eq}>
+										 {$range[1]}
+									</label>&emsp;
+									{/volist}
+									<p class="tips">{$vo.remark}</p>
+								</div>
+							</div>
+							{/eq}
+							<!-- 复选类型 -->
+							{eq name="vo.input_type" value="3"}
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{$vo.config_name}：</label>
+								<div class="col-sm-6">
+									{volist name="vo.select_range" id="range"}
+									<label class="checkbox-inline">
+										<input type="checkbox" name="{$vo.id}[]" value="{$range[0]}" {eq name="vo.value" value="$range[0]"}checked{/eq}>
+										 {$range[1]}
+									</label>&emsp;
+									{/volist}
+									<p class="tips">{$vo.remark}</p>
+								</div>
+							</div>
+							{/eq}
+							<!-- 文本域类型 -->
+							{eq name="vo.input_type" value="4"}
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{$vo.config_name}：</label>
+								<div class="col-sm-6">
+									<textarea name="{$vo.id}" row="5" class="form-control">{$vo.value}</textarea>
+									<p class="tips">{$vo.remark}</p>
+								</div>
+							</div>
+							{/eq}
+							<!-- 富文本域类型 -->
+							{eq name="vo.input_type" value="5"}
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{$vo.config_name}：</label>
+								<div class="col-sm-6">
+									{Form:editor name="$vo['id']"}{$vo.value}{/Form:editor}
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							{/eq}
+							<!-- 文件类型 -->
+							{eq name="vo.input_type" value="6"}
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{$vo.config_name}：</label>
+								<div class="col-sm-6">
+									{Form:image name="$vo['id']" value="$vo.value"}
+								</div>
+								<p class="tips">{$vo.remark}</p>
+							</div>
+							{/eq}
+						{/volist}
+						{/present}
+					</div>
+				{/volist}
+				<div class="form-group">
+					<label class="col-sm-3 control-label">&emsp;</label>
+					<div class="col-sm-6">
+						<button class="btn btn-danger btn-sm">保存设置</button>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+{/block}

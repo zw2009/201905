@@ -1,0 +1,48 @@
+{extend name="Common:base" /}
+{block name="main"}
+	<div class="form-group">
+		<a href="{:url('add')}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-plus"></span> 新增栏目</a>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form action="{:url('set_listorder')}" method="post" autocomplete="off">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th width="60">排序</th>
+						<th width="60" class="text-center">ID</th>
+						<th>分类名称</th>
+						<th>推荐</th>
+						<th width="120" class="text-center">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{volist name="data" id="vo"}
+					<tr>
+						<td>
+							<input type="text" name="listorder[{$vo.id}]" value="{$vo.listorder}" class="listorder">
+						</td>
+						<td class="text-center">{$vo.id}</td>
+						<td>{$vo.html}{$vo.name}</td>
+						<td><a href="{:url('is_focus_status',['id'=>$vo.id])}">{$vo.is_focus|yes_or_no}</a></td>
+						<td class="text-right">
+							{eq name="vo.parent_id" value="0"}
+							<a href="{:url('add',array('pid'=>$vo['id']))}">增加子类</a>
+							{/eq}
+							<a href="{:url('edit',array('id'=>$vo['id']))}">编辑</a>
+							<a href="{:url('del',array('id'=>$vo['id']))}" onclick="javascript:return confirm('确定要删除该记录？');">删除</a>
+						</td>
+					</tr>
+					{/volist}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td><button type="submit" class="btn btn-danger btn-sm">排序</button></td>
+						<td colspan="99"></td>
+					</tr>
+				</tfoot>
+			</table>
+			</form>
+		</div>
+	</div>
+{/block}

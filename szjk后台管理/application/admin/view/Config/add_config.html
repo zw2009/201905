@@ -1,0 +1,99 @@
+{extend name="Common:base" /}
+{block name="func"}
+{/block}
+{block name="main"}
+	<div class="alert alert-info">
+		<h5>配置说明：</h5>
+		<p>1、配置名称为中文释义</p>
+		<p>2、配置标识为读取标识</p>
+		<p>3、富文本编辑域即带编辑器的文本域</p>
+		<p>4、可选值为单选，多选可供选择的项，格式为：键:值;</p>
+		<p>5、非技术人员请谨慎操作</p>
+	</div>
+	<div class="form-group">
+		<a href="{:url('config_list')}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-search"></span> 查看所有配置</a>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{$page_title}</h3>
+		</div>
+		<div class="panel-body">
+			<form class="form-horizontal" action="{:url('update_config')}" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 配置名称：</label>
+					<div class="col-sm-6">
+						<input type="text" name="config_name" class="form-control" value="{$config.config_name|default=''}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 配置标识：</label>
+					<div class="col-sm-6">
+						<input type="text" name="config_code" class="form-control" value="{$config.config_code|default=''}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 所属上级分类：</label>
+					<div class="col-sm-6">
+						<select class="form-control" name="parent_id">
+							<option value="0">顶级分类</option>
+							{volist name="allConfig" id="vo"}
+								<option value="{$vo.id}" {present name="config"}{eq name="vo.id" value="$config['parent_id']"}selected{/eq}{/present}>{$vo.config_name}</option>
+							{/volist}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">配置类型：</label>
+					<div class="col-sm-6">
+						<label class="radio-inline">
+							<input type="radio" name="input_type" value="1" {present name="config"}{eq name="config.input_type" value="1"}checked{/eq}{/present}>
+							文本
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="input_type" value="2" {present name="config"}{eq name="config.input_type" value="2"}checked{/eq}{/present}>
+							单选
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="input_type" value="3" {present name="config"}{eq name="config.input_type" value="3"}checked{/eq}{/present}>
+							多选
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="input_type" value="4" {present name="config"}{eq name="config.input_type" value="4"}checked{/eq}{/present}>
+							文本域
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="input_type" value="5" {present name="config"}{eq name="config.input_type" value="5"}checked{/eq}{/present}>
+							富文本编辑域
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="input_type" value="6" {present name="config"}{eq name="config.input_type" value="6"}checked{/eq}{/present}>
+							文件
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">可选值：</label>
+					<div class="col-sm-6">
+						<textarea name="select_range" row="5" class="form-control">{$config.select_range|default=''}</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">配置说明：</label>
+					<div class="col-sm-6">
+						<textarea name="remark" row="5" class="form-control">{$config.remark|default=''}</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-6">
+						{present name="config"}
+						<input type="hidden" name="id" value="{$config.id}">
+						<input type="hidden" name="gourl" value="{$Think.server.http_referer}">
+						{/present}
+						<button class="btn btn-danger">确定</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{/block}

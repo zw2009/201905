@@ -1,0 +1,180 @@
+{extend name="Common:base" /}
+{block name="script"}
+<style>
+	.media-item.active{border:1px solid #FF2F2F;}
+</style>
+{/block}
+{block name="main"}
+<form method="post" id="myForm" action="{:url('update_reply')}" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">回复规则</h3>
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">回复规则名称：</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="title" value="{$data.title|default=''}">
+				<span class="help-block">您可以给这条规则起一个名字, 方便下次修改和查看. </span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">触发关键词：</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="keywords" value="{$data.keywords|default=''}">
+				<span class="help-block">当用户的对话内容符合以上的关键字定义时，会触发这个回复定义. </span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">状态：</label>
+			<div class="col-sm-6">
+				<label class="radio-inline">
+					<input name="status" value="1" type="radio" {present name="data"}{eq name="data.status" value="1"}checked{/eq}{else/}checked{/present}>
+					启用
+				</label>
+				<label class="radio-inline">
+					<input name="status" value="0" type="radio" {present name="data"}{eq name="data.status" value="0"}checked{/eq}{/present}>
+					禁用
+				</label>
+				<span class="help-block">您可以临时禁用这条回复.</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">优先级：</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" name="listorder" value="{$data.listorder|default='100'}">
+				<span class="help-block">数字越小越靠前，最大不得超过254. </span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">回复内容</h3>
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">图片：</label>
+			<div class="col-sm-6">
+				<div class="input-group">
+					<input type="text" class="form-control" name="pic[media_id]" readonly value="{$data.pic.media_id|default=''}">
+					<label class="input-group-addon" for="media">上传图片</label>
+					<span class="input-group-addon get_media">获取微信素材图片</span>
+				</div>
+				<div class="media-list" style="margin-top:10px"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="col-sm-12">
+		{notempty name="data"}
+		<input type="hidden" name="id" value="{$data.id}">
+		{/notempty}
+		<input type="hidden" name="type" value="image">
+		<button type="submit" class="btn btn-primary">确&emsp;定</button>
+	</div>
+</div>
+</form>
+<form id="media_form">
+	<input type="file" name="media" class="hide" id="media">
+</form>
+<script id="media-list" type="text/html">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<a type="button" class="close"><span aria-hidden="true">×</span></a>
+			<h4 class="panel-title">图片列表</h4>
+		</div>
+		<div class="panel-body">
+			<%each data.item as vo%>
+			<div class="col-md-3">
+				<div class="media-item" data-id="<%vo.media_id%>" style="background:url(<%vo.url%>) no-repeat center center;background-size:auto 100%;height:100px;"></div>
+			</div>
+			<%/each%>
+		</div>
+		<div class="panel-footer text-right">
+			<%if data.prev=='true'%>
+			<a class="btn btn-sm btn-primary prev">上一页</a>
+			<%/if%>
+			<%if data.next=='true'%>
+			<a class="btn btn-sm btn-primary next">下一页</a>
+			<%/if%>
+		</div>
+	</div>
+</script>
+<script type="text/javascript" src="__PLUGS__/tmodjs.js"></script>
+<script>
+	$(document).ready(function(){
+	    var page=1;
+	    //点击事件绑定
+	    function bindMediaEvent(){
+            $('.media-item').unbind('click').click(function(){
+				var media_id=$(this).data('id');
+				$('.media-item').removeClass('active');
+				$(this).addClass('active');
+				$('input[name="pic[media_id]"]').val(media_id);
+			})
+			$('.close').unbind('click').click(function(){
+			    page=1;
+				$('.media-list').html('');
+			})
+			$('.prev').unbind('click').click(function(){
+				page--;
+				getMedia();
+			});
+            $('.next').unbind('click').click(function(){
+                page++;
+                getMedia();
+            });
+		}
+		//获取微信素材列表
+		function getMedia(){
+            $.ajax({
+                type:'POST',
+                data:{type:'image',page:page},
+                url:"{:url('get_media_list')}",
+                beforeSend:function(){
+                    $('.media-list').html("<img src='__IMG__/loading.gif' style='display:block;margin:0 auto;'><p class='text-center'>正在加载素材...</p>");
+				},
+                success:function(result){
+                    if(result.code==1) {
+                        page++;
+                        var data=result.data;
+                        $('.media-list').html(template('media-list', {data: data}));
+                        bindMediaEvent();
+                    }else{
+                        alert(result.msg);
+                    }
+                }
+            })
+		}
+		//选择素材
+		$('.get_media').click(function(){
+            getMedia();
+		})
+        //上传素材
+        $("input[type='file']").on("change", function() {
+            var formData = new FormData($("#media_form")[0]);
+            $.ajax({
+                type:'POST',
+                url:"{:url('upload_media')}",
+                data:formData,
+                processData:false,
+                contentType:false,
+                beforeSend:function(){
+                    $('.media-list').html("<img src='__IMG__/loading.gif' style='display:block;margin:0 auto;'><p class='text-center'>正在上传...</p>");
+				},
+                success:function(result){
+                    if(result.code==1){
+                        var media_id=result.data.media_id;
+                        $('input[name="pic[media_id]"]').val(media_id);
+                        $('.media-list').html('');
+                    }else{
+                        alert(result.msg);
+                    }
+                }
+            })
+        })
+	})
+</script>
+{/block}

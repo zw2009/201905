@@ -1,0 +1,93 @@
+{extend name="Common:base" /}
+{block name="script"}
+<script language="javascript" type="text/javascript" src="__PLUGS__/datePicker/WdatePicker.js"></script>
+{/block}
+{block name="main"}
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title">筛选</h3>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline filter">
+				<div class="form-group">
+					<label>标题：</label>
+					<input type="text" name="keywords" class="form-control input-sm" placeholder="标题/关键字" value="{$_GET['keywords']|default=''}">
+				</div>
+				<div class="form-group">
+					<label>更新时间：</label>
+					<div class="input-group">
+				      	<input type="text" name="start_date" class="form-control input-sm" size="10" value="{$_GET['start_date']|default=''}" onClick="WdatePicker({dateFmt: 'yyyy-MM-dd'})">
+				     	<div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+				    </div>
+				</div>
+				<div class="form-group">
+					<label>到</label>
+					<div class="input-group">
+				      	<input type="text" name="end_date" class="form-control input-sm" size="10" value="{$_GET['end_date']|default=''}" onClick="WdatePicker({dateFmt: 'yyyy-MM-dd'})">
+				     	<div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+				    </div>
+				</div>
+				<div class="form-group">
+				<button type="submit" class="btn btn-danger input-sm">搜索</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<a href="{:url('add',['type'=>$type])}" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-plus"></i> 添加内容</a>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>标题</th>
+						<th width="200" class="text-center">所属栏目</th>
+						<th width="80" class="text-center">点击量</th>
+						<th width="80" class="text-center">状态</th>
+						<th width="80" class="text-center">推荐</th>
+						<th width="80" class="text-center">系统文章</th>
+						<th width="130" class="text-center">更新时间</th>
+						<th width="120" class="text-right">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{present name="data"}
+					{volist name="data" id="news"}
+					<tr>
+						<td>{$news.id}</td>
+						<td>{$news.title}</td>
+						<td class="text-center">{$news.cate_name}</td>
+						<td class="text-center">{$news.click_count}</td>
+						<td class="text-center">
+							<a href="{:url('news_status',array('id'=>$news['id']))}">{$news.status|yes_or_no}</a>
+						</td>
+						<td class="text-center">
+							<a href="{:url('news_recommend',array('id'=>$news['id']))}">
+								{$news.is_recommend|yes_or_no}
+							</a>
+						</td>
+						<td class="text-center">
+							{$news.is_system|yes_or_no}
+						</td>
+						<td class="text-center">{$news.update_time|date="Y-m-d H:i:s",###}</td>
+						<td class="text-right">
+							<a href="{:url('edit',array('id'=>$news['id']))}">编辑</a>
+							<a href="{:url('del',array('id'=>$news['id']))}" onclick="javascript:return confirm('确定要删除该记录？');">删除</a>
+						</td>
+					</tr>
+					{/volist}
+					{/present}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="99" class="text-right">{$page}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+{/block}

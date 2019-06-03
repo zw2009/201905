@@ -1,0 +1,57 @@
+{extend name="Common/base" /}
+{block name="main"}
+	
+	<div class="panel panel-default">
+		<div class="panel-body">
+		<div class="form-group">
+			<a class="btn btn-danger btn-sm" href="{:url('add_menu')}">
+				<span class="glyphicon glyphicon-plus"></span>
+				<span>新增</span>
+			</a>
+			<a class="btn btn-danger btn-sm" href="{:url('sendToWeichat')}">
+				<span class="glyphicon glyphicon-transfer"></span>
+				<span>同步到微信</span>
+			</a>
+		</div>
+		<form method="post" action="{:url('menu_listorder')}">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="text-center" width="80">排序</th>
+						<th class="text-left">菜单名称</th>
+						<th class="text-left">类型</th>
+						<th class="text-left">链接</th>
+						<th class="text-left">关键词</th>
+						<th class="text-left">状态</th>
+						<th class="text-right">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{present name="data"}
+					{volist name="data" id="vo"}
+					<tr>
+						<td class="text-center"><input name="listorders[{$vo.id}]" value="{$vo.listorder}" class="form-control"></td>
+						<td>{$vo.html}{$vo.name}</td>
+						<td>{$vo.type}</td>
+						<td>{$vo.link}</td>
+						<td>{$vo.keywords_name}</td>
+						<td><a href="{:url('menu_status',array('id'=>$vo['id'],'status'=>$vo['status']))}" onclick="javascript:return confirm('确定要修改菜单状态？');">{$vo.status|yes_or_no}</a></td>
+						<td class="text-right">
+							<a href="{:url('edit_menu',array('id'=>$vo['id']))}">修改</a>
+							<a href="{:url('del_menu',array('id'=>$vo['id']))}" onclick="javascript:return confirm('确定要删除该记录？');">删除</a>
+						</td>
+					</tr>
+					{/volist}
+					{/present}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class="text-center"><label class="btn btn-danger btn-sm">排序<input type="submit" class="hide"></label></td>
+						<td colspan="99"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
+		</div>
+	</div>
+{/block}

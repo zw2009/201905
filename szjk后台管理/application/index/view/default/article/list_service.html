@@ -1,0 +1,44 @@
+{extend name="Common:base" /}
+{block name='title'}{$cate.name}_{$config.webname}{/block}
+{block name='keywords'}{$cate.seo_keywords}{/block}
+{block name='description'}{$cate.seo_description}{/block}
+{block name='class'}list_service{/block}
+{block name='body'}
+<div class="inner-banner"></div>
+<div class="inner-main">
+	<div class="pleft">
+		<div class="tbox">
+			<b>脉先森服务</b>
+			<small>OUR SERVICE</small>
+		</div>
+		<ul class="mlist">
+			{volist name="lists" id="vo"}
+			<li><a href="{:url('info',['id'=>$vo.id])}">{$vo.title}</a></li>
+			{/volist}
+		</ul>
+	</div>
+	<div class="pright">
+		<div class="plist">
+			{volist name="lists" id="vo"}
+			<div class="item">
+				<a href="{:url('info',['id'=>$vo.id])}" class="item-img"><img src="{$vo.thumb}"></a>
+				<div class="item-info">
+					<div class="title">
+						{$vo.title}
+						<small>{$vo.title_en|strtoupper|default=''}</small>
+					</div>
+					<div class="details">
+						{$vo.description}
+					</div>
+					<div class="more"><a href="{:url('info',['id'=>$vo.id])}">了解更多</a></div>
+				</div>
+			</div>
+			{/volist}
+		</div>
+		<div class="pageview">
+			{$page}
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+{/block}

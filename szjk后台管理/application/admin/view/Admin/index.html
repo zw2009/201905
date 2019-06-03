@@ -1,0 +1,57 @@
+{extend name="Common:base" /}
+{block name="main"}
+	<div class="form-group">
+		<a href="{:url('add_admin')}" class="btn btn-danger btn-sm">
+			<span class="glyphicon glyphicon-plus"></span> 
+			新增管理员
+		</a>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>帐号</th>
+						<th>角色</th>
+						<th>姓名</th>
+						<th>最后登录时间</th>
+						<th>状态</th>
+						<th>创建时间</th>
+						<th class="text-center">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{empty name="data"}
+						<tr>
+							<td colspan="99" class="text-center">暂无记录</td>
+						</tr>
+					{else/}
+					{volist name="data" id="admin"}
+					<tr>
+						<td>{$admin.login_name}</td>
+						<td>{$admin.role_name}</td>
+						<td>{$admin.real_name}</td>
+						<td>{notempty name="admin.last_login_time"}{$admin.last_login_time|date="Y-m-d H:i:s",###}{/notempty}</td>
+						<td>{$admin.status|yes_or_no}</td>
+						<td>{$admin.create_time|date="Y-m-d H:i:s",###}</td>
+						<td class="text-right">
+							{neq name="admin.role_id" value="0"}
+								{neq name="session.id" value="$admin['id']"}
+									<a href="{:url('edit_admin',array('id'=>$admin['id']))}">编辑</a>
+								{/neq}
+							{/neq}
+							<!--<a href="{:url('del_admin',array('id'=>$admin['id']))}" onclick="javascript:return confirm('确定要删除该记录？');">删除</a>-->
+						</td>
+					</tr>
+					{/volist}
+					{/empty}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="9" class="text-right">{$page}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+{/block}

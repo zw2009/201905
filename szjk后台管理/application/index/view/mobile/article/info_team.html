@@ -1,0 +1,19 @@
+{extend name="Common:base" /}
+{block name='class'}info_team{/block}
+{block name='body'}
+<header>
+	<div class="header">
+		<div class="nav-left">
+			<a class="back" href="{:url('Index/index')}"></a>
+		</div>
+		<div class="header-title">{$data.title}</div>
+	</div>
+</header>
+<div class="inner-cont">
+	<img src="{$data.thumb}" class="thumb">
+	<div class="info">
+		<p>{$data.service}</p>
+	</div>
+	<div class="content">{$data.content}</div>
+</div>
+{/block}

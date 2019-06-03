@@ -1,0 +1,72 @@
+{extend name="Common:base" /}
+{block name="main"}
+<script>
+$(document).ready(function(){
+	//文字广告隐藏宽、高
+	pos_type();
+	$('input[name="type"]').click(function(){
+		pos_type();
+	});
+	function pos_type(){
+		if($('input[name="type"]:checked').val()==2){
+			$('.wh').hide();
+		}else{
+			$('.wh').show();
+		}
+	}
+});
+</script>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{$page_title}</h3>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" id="myForm" method="post" action="{:url('update_pos')}">
+			<div class="form-group">
+				<label for="position_name" class="col-sm-3 control-label">
+					<strong class="text-danger">*</strong>位置：
+				</label>
+				<div class="col-sm-6">
+					<input type="text" name="name" class="form-control" id="position_name" value="{$data.name|default=''}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 类型：</label>
+				<div class="col-sm-6">
+					<label class="radio-inline">
+						<input type="radio" name="type" value="1" checked {present name="data"}{present name="ad_pos"}{neq name="data.type" value="1"}checked="false"{/neq}{/present}{/present}>
+						图片广告
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="type" value="2" {present name="data"}{eq name="data.type" value="2"}checked{/eq}{/present}>
+						文字广告
+					</label>
+				</div>
+			</div>
+			<div class="wh" {present name="data"}{present name="ad_pos"}{eq name="data.type" value="2"}style="display:none;"{/eq}{/present}{/present}>
+				<div class="form-group">
+					<label for="width" class="col-sm-3 control-label">宽度（px）：</label>
+					<div class="col-sm-6">
+						<input type="text" name="width" class="form-control" id="width" value="{$data.width|default=''}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="height" class="col-sm-3 control-label">高度（px）：</label>
+					<div class="col-sm-6">
+						<input type="text" name="height" class="form-control" id="height" value="{$data.height|default=''}">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-6">
+					{present name="data"}
+						<input type="hidden" name="id" value="{$data.id|default=0}">
+					{/present}
+					<button type="submit" class="btn btn-primary" form="myForm">确定</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{/block}

@@ -1,0 +1,112 @@
+{extend name="Common:base" /}
+{block name="main"}
+<script>
+$(document).ready(function(){
+	menu_type();
+	$('input[name="type"]').click(function(){
+		menu_type();
+	})
+})
+function menu_type(){
+	var type=$('input[name="type"]:checked').val();
+	if(type=='view'){
+		$('.view').show();
+		$('.click').hide();
+	}else if(type=='click'){
+		$('.view').hide();
+		$('.click').show();
+	}
+}
+</script>
+<div class="alert alert-info">
+	<h4>自定义菜单填写说明：</h4>
+	<p>1.自定义菜单新增/修改后，需同步到微信才能生效</p>
+	<p>2.同步到微信后由于微信缓存原因可能不能立即生效，可以清理缓存或稍等片刻</p>
+	<p>3.同步到微信时，按排序从小到大排列，一级菜单最多3个，每个一级菜单下，最多5个二级菜单</p>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{$page_title}</h3>
+	</div>
+	<div class="panel-body">
+		<form method="post" class="form-horizontal" id="myForm" autocomplete="off" action="{:url('update_menu')}" >
+			<div class="form-group">
+				<label class="col-sm-3 control-label">标题：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="name" value="{$data.name|default=''}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">类型：</label>
+				<div class="col-sm-6">
+					<label class="radio-inline">
+						<input type="radio"  name="type" value="view" {notpresent name="data"}checked{else/}{eq name="data.type" value="view"}checked{/eq}{/notpresent}>
+						view类型
+					</label>
+					<label class="radio-inline">
+						<input type="radio"  name="type" value="click" {present name="data"}{eq name="data.type" value="click"}checked{/eq}{/present}>
+						click类型
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">上级菜单：</label>
+				<div class="col-sm-6">
+					<select name="parent_id" class="form-control">
+						<option value="0">顶级菜单</option>
+						{volist name="top_menu" id="vo"}
+							<option value="{$vo.id}" {present name="data"}{eq name="vo.id" value="$data['parent_id']"}selected{/eq}{/present}>{$vo.name}</option>
+						{/volist}
+					</select>
+				</div>
+			</div>
+			<div class="form-group view">
+				<label class="col-sm-3 control-label">跳转链接：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="link" value="{$data.link|default=''}">
+				</div>
+			</div>
+			<div class="form-group click">
+				<label class="col-sm-3 control-label">关键词：</label>
+				<div class="col-sm-6">
+					<select name="keywords" class="form-control">
+						<option value="0">请选择关键词</option>
+						{volist name="keywords" id="vo"}
+							<option value="{$vo.id}" {present name="data"}{eq name="vo.id" value="$data['keywords']"}selected{/eq}{/present}>{$vo.keywords}</option>
+						{/volist}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-6">
+					<label class="radio-inline">
+						<input type="radio"  name="status" value="1" {notpresent name="data"}checked{else/}{eq name="data.status" value="1"}checked{/eq}{/notpresent}>
+						开通
+					</label>
+					<label class="radio-inline">
+						<input type="radio"  name="status" value="0" {present name="data"}{eq name="data.status" value="0"}checked{/eq}{/present}>
+						禁用
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">排序：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control form-control-xs" name="listorder" value="{$data.listorder|default=100}">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label">排序：</label>
+				<div class="col-sm-6">
+					{present name="data"}
+						<input type="hidden" name="id" value="{$data.id}">
+					{/present}
+					<button type="submit" class="btn btn-primary" form="myForm">确定</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{/block}

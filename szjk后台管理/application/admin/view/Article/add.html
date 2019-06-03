@@ -1,0 +1,178 @@
+{extend name="Common:base" /}
+{block name="main"}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{$page_title}</h3>
+		</div>
+		<div class="panel-body">
+			<form class="form-horizontal" method="post" action="{:url('update')}" enctype="multipart/form-data">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#base" aria-controls="base" role="tab" data-toggle="tab">常规信息</a></li>
+					<li role="presentation"><a href="#addon" aria-controls="addon" role="tab" data-toggle="tab">附加信息</a></li>
+					<li role="presentation"><a href="#content" aria-controls="content" role="tab" data-toggle="tab">详细内容</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="base">
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 栏目：</label>
+							<div class="col-sm-6">
+								<select name="cate_id" class="form-control">
+									<option value="0">请选择栏目分类</option>
+									{volist name="allCate" id="vo"}
+									<option value="{$vo.id}" {present name="data"}{eq name="data.cate_id" value="$vo.id"}selected{/eq}{/present}>{$vo.html}{$vo.name}</option>
+									{/volist}
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><strong class="text-danger">*</strong> 标题：</label>
+							<div class="col-sm-6">
+								<input type="text" name="title" class="form-control" id="title" value="{$data.title|default=''}">
+								<span class="help-block">不超过80个字</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">关键词：</label>
+							<div class="col-sm-6">
+								<input type="text" name="keywords" class="form-control" value="{$data.keywords|default=''}">
+								<span class="help-block">多关键词之间用“,”隔开,40个字以内</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 内容摘要：</label>
+							<div class="col-sm-6">
+								<textarea name="description" class="form-control">{$data.description|default=''}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">排序：</label>
+							<div class="col-sm-6">
+								<input type="text" name="listorder" class="form-control" value="{$data.listorder|default=100}">
+								<span class="text-danger fs12">按从小到大的顺序排列</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">推荐：</label>
+							<div class="col-sm-6">
+								<label class="checkbox-inline">
+									<input type="checkbox" name="is_recommend" value="1" {present name="data"}{eq name="data.is_recommend" value="1"}checked{/eq}{/present}>
+									是
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="addon">
+						{eq name="type" value="article"}
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 缩略图：</label>
+							<div class="col-sm-6">
+								{Form:image name="thumb" value="$data.thumb"/}
+								<div class="help-block">图片推荐尺寸600*448</div>
+							</div>
+						</div>
+						{/eq}
+						{eq name="type" value="linkstore"}
+						<script type="text/javascript" src="__PLUGS__/distpicker/distpicker.js"></script>
+						<script>
+                            $(function(){
+                                $('#distpicker').distpicker({
+                                    placeholder:true,
+                                    data:$.parseJSON('{$dist|json_encode}'),
+                                    province:'{$data.addon.province|default=0}',
+                                    city:'{$data.addon.city|default=0}',
+                                    district:'{$data.addon.area|default=0}',
+                                });
+                            })
+						</script>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 缩略图：</label>
+							<div class="col-sm-6">
+								{Form:image name="thumb" value="$data.thumb"/}
+								<div class="help-block">图片推荐尺寸400*200</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 服务项目：</label>
+							<div class="col-sm-6">
+								<input type="text" name="service" class="form-control" value="{$data.addon.service|default=''}">
+							</div>
+						</div>
+						<div class="form-group" id="distpicker">
+							<label class="col-sm-3 control-label">所在地区：</label>
+							<div class="col-sm-2">
+								<select name="province" class="form-control"></select>
+							</div>
+							<div class="col-sm-2">
+								<select name="city" class="form-control"></select>
+							</div>
+							<div class="col-sm-2">
+								<select name="area" class="form-control"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 详细地址：</label>
+							<div class="col-sm-6">
+								<input type="text" name="address" class="form-control" value="{$data.addon.address|default=''}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 联系电话：</label>
+							<div class="col-sm-6">
+								<input type="text" name="tel" class="form-control" value="{$data.addon.tel|default=''}">
+							</div>
+						</div>
+						{/eq}
+						{eq name="type" value="service"}
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 缩略图：</label>
+							<div class="col-sm-6">
+								{Form:image name="thumb" value="$data.thumb"/}
+								<div class="help-block">图片推荐尺寸300*240</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 英文标题：</label>
+							<div class="col-sm-6">
+								<input type="text" name="title_en" class="form-control" value="{$data.addon.title_en|default=''}">
+							</div>
+						</div>
+						{/eq}
+						{eq name="type" value="team"}
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 服务科室：</label>
+							<div class="col-sm-6">
+								<input type="text" name="service" class="form-control" value="{$data.addon.service|default=''}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label"> 缩略图：</label>
+							<div class="col-sm-6">
+								{Form:image name="thumb" value="$data.thumb"/}
+								<div class="help-block">图片推荐尺寸300*300</div>
+							</div>
+						</div>
+						{/eq}
+					</div>
+					<div class="tab-pane" id="content">
+						<div class="form-group">
+							<div class="col-sm-12">
+								{Form:editor name="content"}{$data.content|default=''}{/Form:editor}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-6">
+						{present name="data"}
+						<input type="hidden" name="id" value="{$data.id}">
+						<input type="hidden" name="gourl" value="{$Think.server.http_referer}">
+						{/present}
+						<input type="hidden" name="type" value="{$type}">
+						<button class="btn btn-danger ajaxSubmit">确定</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{/block}

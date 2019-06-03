@@ -1,0 +1,44 @@
+{extend name="Common:base" /}
+{block name='title'}{$cate.name}_{$config.webname}{/block}
+{block name='keywords'}{$cate.seo_keywords}{/block}
+{block name='description'}{$cate.seo_description}{/block}
+{block name='class'}list_team{/block}
+{block name='body'}
+<div class="inner-banner"></div>
+<div class="inner-main">
+    <div class="ptitle">
+        <div class="title">脉先森团队</div>
+        <div class="slogan">
+            GIVE YOU THE BEST SERVICE
+            <span>只为给您最好的服务</span>
+        </div>
+    </div>
+    <ul class="tlist">
+        <li {eq name="top_id" value="$Request.param.cid"}class="active"{/eq}><a href="{:url('lists',['cid'=>$topcate.id])}">全部</a></li>
+        {volist name="subcate" id="vo"}
+        <li {eq name="vo.id" value="$Request.param.cid"}class="active"{/eq}><a href="{:url('lists',['cid'=>$vo.id])}">{$vo.name}</a></li>
+        {/volist}
+    </ul>
+    <div class="plist">
+        {volist name="lists" id="vo"}
+        <div class="item">
+            <a class="item-img" href="{:url('info',['id'=>$vo.id])}">
+                <img src="{$vo.thumb}">
+                <div class="name">{$vo.title}</div>
+            </a>
+            <div class="item-info">
+                <div class="title">{$vo.service}</div>
+                <div class="details">
+                    {$vo.description}
+                </div>
+                <div class="more"><a href="{:url('info',['id'=>$vo.id])}"></a></div>
+            </div>
+        </div>
+        {/volist}
+        <div class="clearfix"></div>
+    </div>
+    <div  class="pageview">
+        {$page}
+    </div>
+</div>
+{/block}

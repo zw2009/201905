@@ -1,0 +1,65 @@
+{extend name="Common/base"/}
+{block name="main"}
+	<div class="alert alert-info">
+		<h4>微信配置说明：</h4>
+		<p>1.微信配置请根据微信公众平台的参数配置</p>
+		<p>2.配置好后需在微信公众平台验证一下token</p>
+		<p>3.如有获取会员信息或其他JS功能，请同时配置相关域名</p>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{$page_title}</h3>
+		</div>
+		<div class="panel-body">
+			<form method="post" class="form-horizontal" id="myForm" autocomplete="off" >
+				<div class="form-group">
+					<label class="col-sm-3 control-label">URL：</label>
+					<div class="form-control-static">{$Request.root.true}{:url('Index/Weichat/index')}</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">AppId(应用ID)：</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="appid" value="{$data.appid|default=''}">
+						<span class="fs12 text-primary">在微信公众号后台【基本配置】中查看</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">AppSecret(应用密钥)：</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control form-control-lg" name="appsecret" value="{$data.appsecret|default=''}">
+						<span class="fs12 text-primary">在微信公众号后台【基本配置】中查看</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Token(令牌)：</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="token" value="{$data.token|default=''}">
+						<span class="fs12 text-primary">同步微信【基本配置】中设置的token</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">消息加解密密钥：</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control form-control-lg" name="aeskey" value="{$data.aeskey|default=''}">
+						<span class="fs12 text-primary">同步微信【基本配置】中设置的EncodingAESKey</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">关注回复内容：</label>
+					<div class="col-sm-6">
+						<textarea name="subscribe" class="form-control">{$data.subscribe|default=''}</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-6">
+						{present name="data"}
+						<input type="hidden" name="id" value="{$data.id}">
+						{/present}
+						<button class="btn btn-danger">确定</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{/block}

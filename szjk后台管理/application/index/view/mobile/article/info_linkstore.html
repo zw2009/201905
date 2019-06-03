@@ -1,0 +1,21 @@
+{extend name="Common:base" /}
+{block name='class'}info_linkstore{/block}
+{block name='body'}
+<header>
+	<div class="header">
+		<div class="nav-left">
+			<a class="back" href="{:url('Index/index')}"></a>
+		</div>
+		<div class="header-title">{$data.title}</div>
+	</div>
+</header>
+<div class="inner-cont">
+	<img src="{$data.thumb}">
+	<div class="info">
+		<p>服务项目：{$data.service}</p>
+		<p>预约电话：{$data.tel}</p>
+		<p>地&emsp;&emsp;址：{$data.address}</p>
+	</div>
+	<div class="content">{$data.content}</div>
+</div>
+{/block}

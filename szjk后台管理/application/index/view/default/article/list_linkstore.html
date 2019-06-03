@@ -1,0 +1,48 @@
+{extend name="Common:base" /}
+{block name='title'}{$cate.name}_{$config.webname}{/block}
+{block name='keywords'}{$cate.seo_keywords}{/block}
+{block name='description'}{$cate.seo_description}{/block}
+{block name='class'}list_linkstore{/block}
+{block name='body'}
+<div class="inner-banner"></div>
+<div class="inner-main">
+	<div class="pleft">
+		<div class="tbox">
+			<b>脉先森连锁</b>
+			<small>OUR CHAIN</small>
+		</div>
+		<ul class="mlist">
+			<li {empty name="Request.param.dist"}class="active"{/empty}><a href="{:url('lists',['cid'=>$Request.param.cid,'dist'=>''])}">全部</a></li>
+			{volist name="province" id="vo"}
+			<li {eq name="vo.code" value="$Request.param.dist"}class="active"{/eq}><a href="{:url('lists',['cid'=>$Request.param.cid,'dist'=>$vo.code])}">{$vo.name}</a></li>
+			{/volist}
+		</ul>
+	</div>
+	<div class="pright">
+		<ul class="tlist">
+			<li {eq name="top_id" value="$Request.param.cid"}class="active"{/eq}><a href="{:url('lists',['cid'=>$top_id,'dist'=>$Request.param.dist])}">全部</a></li>
+			{volist name="subcate" id="vo"}
+			<li {eq name="vo.id" value="$Request.param.cid"}class="active"{/eq}><a href="{:url('lists',['cid'=>$vo.id,'dist'=>$Request.param.dist])}">{$vo.name}</a></li>
+			{/volist}
+		</ul>
+		<div class="plist">
+			{volist name="lists" id="vo"}
+			<div class="item">
+				<a href="{:url('info',['id'=>$vo.id])}" class="item-img"><img src="{$vo.thumb}"></a>
+				<dl class="item-info">
+					<dt>{$vo.title}</dt>
+					<dd>服务项目：{$vo.addon.service}</dd>
+					<dd>地址：{$vo.addon.address}</dd>
+					<dd>预约电话：{$vo.addon.tel}</dd>
+					<dd><a href="{:url('info',['id'=>$vo.id])}" class="more">了解更多</a></dd>
+				</dl>
+			</div>
+			{/volist}
+		</div>
+		<div class="pageview">
+			{$page}
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+{/block}

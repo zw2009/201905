@@ -1,0 +1,4 @@
+---------------------------------------------------------------
+[ 2019-05-30T19:31:21+08:00 ] 0.0.0.0 115.214.254.172 POST /index.php
+[ info ] www.maixs.com/index.php [运行时间：0.026454s][吞吐率：37.80req/s] [内存消耗：1,573.45kb] [文件加载：46]
+[ error ] [2]Cannot call assert() with string argument dynamically[D:\wwwroot\szjk\thinkphp\library\think\Request.php:1060]

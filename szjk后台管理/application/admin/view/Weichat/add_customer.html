@@ -1,0 +1,46 @@
+{extend name="Common:base" /}
+{block name="main"}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{$page_title}</h3>
+	</div>
+	<div class="panel-body">
+		<form method="post" id="myForm" action="" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">客服账号：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="account" value="{$kf_account|default=''}" {present name="kf_account"}readonly{/present}>
+					<span class="help-block">完整客服帐号，格式为：帐号前缀@公众号微信号，帐号前缀最多10个字符，必须是英文、数字字符或者下划线，后缀为公众号微信号，长度不超过30个字符</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">客服昵称：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="nickname" value="{$data.nickname|default=''}">
+					<span class="help-block">{present name="kf_account"}留空则不修改，{/present}客服昵称，最长16个字</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">客服微信号：</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" name="invite_wx" value="{$data.nickname|default=''}">
+					<span class="help-block">{present name="kf_account"}留空则不修改，{/present}接收绑定邀请的客服微信号</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">客服头像：</label>
+				<div class="col-sm-6">
+					<input type="file" name="kf_headimgurl">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-6">
+					<button type="submit" class="btn btn-primary">确定</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{/block}

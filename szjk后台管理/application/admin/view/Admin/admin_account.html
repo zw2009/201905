@@ -1,0 +1,77 @@
+{extend name="Common:base" /}
+{block name="script"}
+	
+{/block}
+{block name="func"}
+	<a href="{:url('account_adjust',['id'=>$Request.param.id])}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-edit"></span> 账务修正</a>
+{/block}
+{block name="main"}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="count-result">
+				<a class="sum-item col-md-4 {eq name='type' value='use_fee'}active{/eq}" href="{:url('',['id'=>$Request.param.id,'type'=>'use_fee'])}">
+					<div class="sum-text">平台使用费</div>	
+					<div class="sum-res">&yen;{$account.use_fee|default=0.00}</div>	
+				</a>
+				<a class="sum-item col-md-4 {eq name='type' value='bonus'}active{/eq}" href="{:url('',['id'=>$Request.param.id,'type'=>'bonus'])}">
+					<div class="sum-text">奖池奖金</div>	
+					<div class="sum-res">&yen;{$account.bonus|default=0}</div>	
+				</a>
+				<a class="sum-item col-md-4 {eq name='type' value='love_fund'}active{/eq}" href="{:url('',['id'=>$Request.param.id,'type'=>'love_fund'])}">
+					<div class="sum-text">爱心基金</div>	
+					<div class="sum-res">&yen;{$account.love_fund|default=0}</div>	
+				</a>
+			</div>
+		</div>
+		<div class="clear15"></div>
+		<div class="col-sm-12">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>类型</th>
+						<th>上次结余</th>
+						<th>变动金额</th>
+						<th>本次结余</th>
+						<th width="150">变动时间</th>
+						<th>说明</th>
+					</tr>
+				</thead>
+				<tbody>
+					{volist name="data" id="vo"}
+					<tr>
+						<td>{$vo.type_name}</td>
+						<td>
+						{switch name="type"}
+							{case value="use_fee"}{$vo.last_use_fee}{/case}
+							{case value="bonus"}{$vo.last_bonus}{/case}
+							{case value="love_fund"}{$vo.last_love_fund}{/case}
+						{/switch}
+						</td>
+						<td>
+						{switch name="type"}
+							{case value="use_fee"}{$vo.use_fee}{/case}
+							{case value="bonus"}{$vo.bonus}{/case}
+							{case value="love_fund"}{$vo.love_fund}{/case}
+						{/switch}
+						</td>
+						<td>
+						{switch name="type"}
+							{case value="use_fee"}{$vo.balance_use_fee}{/case}
+							{case value="bonus"}{$vo.balance_bonus}{/case}
+							{case value="love_fund"}{$vo.balance_love_fund}{/case}
+						{/switch}
+						</td>
+						<td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+						<td>{$vo.message}</td>
+					</tr>
+					{/volist}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="9" class="text-right">{$page}</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+{/block}

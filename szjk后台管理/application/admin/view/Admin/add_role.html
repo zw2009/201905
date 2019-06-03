@@ -1,0 +1,43 @@
+{extend name="Common:base" /}
+{block name="main"}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{$page_title}</h3>
+	</div>
+	<div class="panel-body">
+	<form class="form-horizontal" method="post" action="{:url('update_role')}" id="myForm">
+		<div class="form-group">
+			<label for="role_name" class="col-sm-3 control-label"><strong class="text-danger">*</strong> 角色名称：</label>
+			<div class="col-sm-6">
+				<input type="text" name="role_name" class="form-control" id="role_name" value="{$data.role_name|default=''}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">角色说明：</label>
+			<div class="col-sm-6">
+				<textarea name="remark" class="form-control">{$data.remark|default=''}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">是否开启：</label>
+			<div class="col-sm-6">
+				<label class="checkbox-inline">
+					<input type="checkbox" name="status" value="1" {present name="data"}{eq name="data.status" value="1"}checked{/eq}{/present}>
+					是
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-6">
+				{present name="data"}
+				<input type="hidden" name="id" value="{$data.id}">
+				<input type="hidden" name="gourl" value="{$Think.server.http_referer}">
+				{/present}
+				<button type="submit" class="btn btn-primary" form="myForm">确定</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+{/block}
